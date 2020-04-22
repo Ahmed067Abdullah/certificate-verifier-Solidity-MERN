@@ -1,6 +1,6 @@
 .certificate-container {
   border: 10px solid #24C4D4;
-  max-width: 900px;
+  max-width: 800px;
   width: 95vw;
   min-width: 300px;
   padding: 40px 40px 30px;
@@ -23,23 +23,25 @@
 }
 
 .styled-div>img {
-  width: 90%;
+  width: 74%;
   margin-top: 10px;
 }
 
 .main-content {
   text-align: center;
+  width: 80%;
+  margin: auto;
 }
 
 .main-heading {
   color: #24C4D4;
   font-size: 24px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .main-heading>span {
   display: block;
-  font-size: 40px;
+  font-size: 48px;
   font-weight: 500;
 }
 
@@ -51,10 +53,12 @@
 .certificate-text>.name {
   color: #24C4D4;
   display: block;
-  font-size: 48px;
+  font-size: 64px;
   width: unset;
   border-bottom: 1px solid gold;
-  margin: 10px;
+  margin: 0 auto 10px;
+  width: fit-content;
+  padding: 0 20px;
 }
 
 .certificate-text>span {
@@ -63,10 +67,12 @@
 
 .certificate-footer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   color: #4e4e4e;
   font-size: 20px;
+  width: 90%;
+  margin: 50px auto 0;
 }
 
 .issuer {
