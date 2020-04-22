@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import './ViewCertificate.css';
 
 const ViewCertificate = () => {
@@ -29,6 +31,16 @@ const ViewCertificate = () => {
     return diffString;
   }
 
+  const exportPDF = () => {
+    html2canvas(document.querySelector(".certificate-container")).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save("download.pdf");
+    });
+  }
+
+  const uuid = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed';
   const name = 'Ahmed Abdullah';
   const achievement = 'CMAD course';
   const logoURL = 'https://ipac.page/images/brand-logo-1.jpg';
@@ -41,6 +53,7 @@ const ViewCertificate = () => {
   const awardedAt = 1587551502739;
   return (
     <div className="view-certificate-container">
+      <button onClick={exportPDF}>Export PDF</button>
       <div className="certificate-container">
         <div className="styled-div">
           <img src={logoURL} alt="Company logo" />
@@ -66,6 +79,7 @@ const ViewCertificate = () => {
           </div>
           <p className="issued-date">{moment(awardedAt).format('Do MMMM, YYYY.')}</p>
         </div>
+        <p className="certificate-uuid">{uuid}</p>
       </div>
     </div >
   )
