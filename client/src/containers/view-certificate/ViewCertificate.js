@@ -2,9 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import './ViewCertificate.css';
+import stylesheet from './ViewCertificate.styes';
+import { createUseStyles } from 'react-jss';
+// import './ViewCertificate.css';
 
 const ViewCertificate = () => {
+  const classes = createUseStyles(stylesheet())();
 
   const getDifference = (startDate, endDate) => {
     const diff = Math.floor(moment(endDate).diff(moment(startDate), 'months', true));
@@ -52,19 +55,19 @@ const ViewCertificate = () => {
   const designation = 'CEO';
   const awardedAt = 1587551502739;
   return (
-    <div className="view-certificate-container">
+    <div className='view-certificate-container'>
       <button onClick={exportPDF}>Export PDF</button>
-      <div className="certificate-container">
-        <div className="styled-div">
+      <div className={classes['certificate-container']}>
+        <div className={classes['styled-div']}>
           <img src={logoURL} alt="Company logo" />
         </div>
-        <div className="main-content">
-          <p className="main-heading">
+        <div className={classes['main-content']}>
+          <p className={classes['main-heading']}>
             <span>Certificate </span>
             of Achievement</p>
-          <p className="certificate-text">
+          <p className={classes['certificate-text']}>
             This certificate is presented to
-            <span className="name">{name}</span>
+            <span className='name'>{name}</span>
             For successfully completing&nbsp;
             <span>{achievement}</span> from&nbsp;
             <span>{moment(startDate).format('MMMM Do YYYY')}</span> to&nbsp;
@@ -72,15 +75,15 @@ const ViewCertificate = () => {
             {difference ? `(${difference})` : ''}
           </p>
         </div>
-        <div className="certificate-footer">
+        <div className={classes['certificate-footer']}>
           <div>
-            <p className="issuer">{user}</p>
-            <p className="issuer-designation">{designation} at {companyName}</p>
+            <p className={classes['issuer']}>{user}</p>
+            <p className={classes['issuer-designation']}>{designation} at {companyName}</p>
           </div>
-          <p className="issued-date">{moment(awardedAt).format('Do MMMM, YYYY.')}</p>
+          <p className={classes['issued-date']}>{moment(awardedAt).format('Do MMMM, YYYY.')}</p>
         </div>
-        <p className="certificate-uuid">{uuid}</p>
-      </div>
+        <p className={classes['certificate-uuid']}>{uuid}</p>
+      </div >
     </div >
   )
 }
