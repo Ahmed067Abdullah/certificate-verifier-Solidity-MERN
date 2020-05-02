@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import stylesheet from './ViewCertificate.styes';
+import stylesheet from './ViewCertificate.styles';
 import { createUseStyles } from 'react-jss';
 // import './ViewCertificate.css';
 
