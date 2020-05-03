@@ -1,8 +1,9 @@
 import React from 'react';
 import { Form, Input, Button, Card, DatePicker } from 'antd';
-import stylesheet from './AwardCertificate.styles';
+import Navbar from '../../components/nav-bar/NavBar';
 import { awardCertificateFormFields as formFields } from '../../shared/formFields';
-import { layout, tailLayout} from '../../shared/formLayout';
+import { layout, tailLayout } from '../../shared/formLayout';
+import stylesheet from './AwardCertificate.styles';
 
 const AwardCertificate = () => {
   const onFinish = values => {
@@ -17,6 +18,7 @@ const AwardCertificate = () => {
 
   return (
     <div>
+      <Navbar />
       <Card
         className={classes['register-company-card']}
         title="Award Certificate">

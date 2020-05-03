@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Card } from 'antd';
+import Navbar from '../../components/nav-bar/NavBar';
 import { registerCompanyFormFields as formFields } from '../../shared/formFields';
 import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './RegisterCompany.styles';
@@ -22,6 +23,7 @@ const RegisterCompany = () => {
 
   return (
     <div>
+      <Navbar />
       <Card
         className={classes['register-company-card']}
         title="Register Company">
