@@ -10,7 +10,7 @@ const App = () => {
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/view-certificate" component={ViewCertificate} />
+          <Route path="/view-certificate/:uuid" component={ViewCertificate} />
           <Route path="/register-company" component={RegisterCompany} />
           <Route path="/award-certificate" component={AwardCertificate} />
         </Switch>
