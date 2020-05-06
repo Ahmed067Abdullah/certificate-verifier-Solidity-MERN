@@ -14,6 +14,8 @@ contract CertificateVerifier {
         string startDate;
         string endDate;
         address awarder;
+        string awarderName;
+        string awarderDesignation;
         bool isSet;
     }
     
@@ -29,10 +31,10 @@ contract CertificateVerifier {
         return Companies[companyAddress].name;
     }
     
-    function awardCertificate(string memory uuid, string memory name, string memory  position, string memory startDate, string memory  endDate) public {
+    function awardCertificate(string memory uuid, string memory name, string memory  position, string memory startDate, string memory  endDate, string memory  awarderName, string memory  awarderDesignation) public {
         require(Companies[tx.origin].isSet, "Organization isn't registered");
         require(!Certificates[uuid].isSet, 'Certificate ID already used');
-        Certificates[uuid] = Certificate(name, position, startDate, endDate, tx.origin, true);
+        Certificates[uuid] = Certificate(name, position, startDate, endDate, tx.origin, awarderName, awarderDesignation,true);
     }
     
     function getCertificate(string memory uuid) public view returns (string memory) {
