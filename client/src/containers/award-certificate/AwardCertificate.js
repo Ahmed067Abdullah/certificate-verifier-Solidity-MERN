@@ -16,6 +16,7 @@ const AwardCertificate = () => {
   }, []);
 
   const onFinish = values => {
+    setIsSubmitting(true);
     awardCertificate(values)
       .then(res => {
 
