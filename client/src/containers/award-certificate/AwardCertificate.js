@@ -1,54 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Card, DatePicker } from 'antd';
-import { v4 as uuidv4 } from 'uuid';
-import contract from '../../shared/contract';
 import Navbar from '../../components/nav-bar/NavBar';
 import { awardCertificateFormFields as formFields } from '../../shared/formFields';
 import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './AwardCertificate.styles';
-import moment from 'moment';
+import { awardCertificate, checkCompany } from './AwardCertificate.service';
 
 const AwardCertificate = () => {
-  const [isMetaMaskEnabled, setIsMetaMaskEnabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [comapny, setCompany] = useState('');
+  const [comapnyLoading, setCompanyLoading] = useState(true);
 
   useEffect(() => {
-    const { ethereum } = window;
-    if (!ethereum) {
-      alert('Please install metamask');
-    }
-    ethereum.enable()
-      .then(() => {
-        setIsMetaMaskEnabled(true);
-      });
-
-    contract.methods.getCertificate('0x4Af3462EdE5F27469cF2Ef9F590947f0648dDecf')
-      .call({ from: ethereum.selectedAddress })
-      .then(res => {
-        console.log('Certificate:', res)
-      })
-      .catch(err => {
-        console.log(err)
-      });
+    checkCompany(setCompany, setCompanyLoading);
   }, []);
 
   const onFinish = values => {
-    console.log('Success:', values);
-    const { ethereum } = window;
-    const { candidateName, duration, position, presenter, presenterDesignation } = values;
-    const uuid = uuidv4();
-    console.log(ethereum.selectedAddress, uuid);
-    const startDate = moment(duration[0]).unix().toString();
-    const endDate = moment(duration[1]).unix().toString();
-    setIsSubmitting(true);
-    contract.methods.awardCertificate(uuid, candidateName, position, startDate, endDate, presenter, presenterDesignation)
-      .send({ from: ethereum.selectedAddress }, (err, address) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        console.log('Tx Address:', address);
-      })
+    awardCertificate(values)
       .then(res => {
 
       })
@@ -67,7 +35,8 @@ const AwardCertificate = () => {
       <Navbar />
       <Card
         className={classes['register-company-card']}
-        title="Award Certificate">
+        title="Award Certificate"
+        loading={comapnyLoading}>
         <Form
           {...layout}
           name="register-comapny"
@@ -80,13 +49,14 @@ const AwardCertificate = () => {
             rules={field.rules}
           >
             {field.type === 'date'
-              ? <DatePicker.RangePicker style={{ width: '100%' }} />
-              : <Input />}
+              ? <DatePicker.RangePicker style={{ width: '100%' }} disabled={isSubmitting} />
+              : <Input disabled={isSubmitting} />}
           </Form.Item>)}
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
               Submit
             </Button>
+            {comapny ? <p className={classes['company-name']}>from <span>{comapny}</span></p> : ''}
           </Form.Item>
         </Form>
       </Card>
