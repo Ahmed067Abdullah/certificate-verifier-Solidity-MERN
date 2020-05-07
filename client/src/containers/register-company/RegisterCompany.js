@@ -10,6 +10,8 @@ import stylesheet from './RegisterCompany.styles';
 
 const RegisterCompany = () => {
   const [isMetaMaskEnabled, setIsMetaMaskEnabled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     const { ethereum } = window;
     if (!ethereum) {
@@ -34,19 +36,23 @@ const RegisterCompany = () => {
     const { company, website, logo } = values;
     const { ethereum } = window;
     console.log(ethereum.selectedAddress)
+    setIsSubmitting(true);
     contract.methods.registerCompany(company, logo, website)
-      .call({
-        from: ethereum.selectedAddress,
-        gas: 1000000,
-        gasPrice: '30000000000000',
-      }, (a, b, c) => {
-        console.log(a, b, c);
+      .send({ from: ethereum.selectedAddress }, (err, address) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('Tx Address:', address);
       })
       .then(res => {
-        console.log('reg cmp: ', res)
+
       })
       .catch(err => {
         console.log(err)
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
   };
 
@@ -57,7 +63,7 @@ const RegisterCompany = () => {
   const classes = stylesheet();
 
   return (
-    <div>
+    <div style={{ 'pointerEvents': isSubmitting ? 'none' : 'all' }}>
       <Navbar />
       <Card
         className={classes['register-company-card']}
@@ -73,14 +79,14 @@ const RegisterCompany = () => {
             name={field.name}
             rules={field.rules}
           >
-            <Input />
+            <Input disabled={isSubmitting} />
           </Form.Item>)}
           {/* <SketchPicker
           onChange={e => console.log(e)}
           onChangeComplete={handleChangeComplete}
         /> */}
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit" disabled={!isMetaMaskEnabled}>
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
               Submit
         </Button>
           </Form.Item>
