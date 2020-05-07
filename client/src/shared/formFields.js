@@ -20,6 +20,16 @@ export const awardCertificateFormFields = [
     rules: [requiredRule],
   },
   {
+    label: 'Presenter',
+    name: 'presenter',
+    rules: [requiredRule],
+  },
+  {
+    label: "Presenter's Designation",
+    name: 'presenterDesignation',
+    rules: [requiredRule],
+  },
+  {
     label: 'Duration',
     name: 'duration',
     rules: [requiredRule],
