@@ -2,13 +2,14 @@ import contract from '../../shared/contract';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
 
-export const checkCompany = (setCompany, setCompanyLoading) => {
+export const checkCompany = (setCompanyLoading, setComapnyNotRegistered, setCompany = () => { }) => {
   const { ethereum } = window;
   if (ethereum.selectedAddress) {
     contract.methods.getCompany(ethereum.selectedAddress)
       .call({ from: ethereum.selectedAddress })
       .then(res => {
         setCompany(res);
+        setComapnyNotRegistered(res === '');
         console.log('Comapny:', res)
       })
       .catch(err => {
