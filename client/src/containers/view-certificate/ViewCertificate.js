@@ -1,37 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import contract from '../../shared/contract';
 import moment from 'moment';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import stylesheet from './ViewCertificate.styles';
 import { createUseStyles } from 'react-jss';
-// import './ViewCertificate.css';
+import { getCertificate } from './ViewCertificate.service';
 
 const ViewCertificate = ({ match }) => {
-  const [isMetaMaskEnabled, setIsMetaMaskEnabled] = useState(false);
+  const [certificateLoading, setCertificateLoading] = useState(true);
   const [certificate, setCertificate] = useState({});
 
   useEffect(() => {
     const { params: { uuid } } = match;
-    const { ethereum } = window;
-    if (!ethereum) {
-      alert('Please install metamask');
-    }
-    ethereum.enable()
-      .then(() => {
-        setIsMetaMaskEnabled(true);
-      });
-
-    contract.methods.getCertificate(uuid)
-      .call({ from: ethereum.selectedAddress })
+    getCertificate(uuid)
       .then(res => {
         setCertificate(res);
-        console.log('Certificate:', res)
       })
-      .catch(err => {
-        console.log(err)
-      });
-  }, [])
+      .catch(err => console.log(err));
+  }, []);
+
   const classes = createUseStyles(stylesheet())();
 
   const getDifference = (startDate, endDate) => {
@@ -81,7 +68,7 @@ const ViewCertificate = ({ match }) => {
   const awardedAt = 1587551502739;
   return (
     <div className='view-certificate-container'>
-      <button onClick={exportPDF}>Export PDF</button>
+      {/* <button onClick={exportPDF}>Export PDF</button> */}
       <div className={classes['certificate-container']}>
         <div className={classes['styled-div']}>
           <img src={logoURL} alt="Company logo" />
