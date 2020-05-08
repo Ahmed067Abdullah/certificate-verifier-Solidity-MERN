@@ -17,6 +17,11 @@ const NavBar = () => {
             Award Certificate
           </Link>
         </Menu.Item>
+        <Menu.Item key="find-certificate">
+          <Link to="/find-certificate">
+            Find Certificate
+          </Link>
+        </Menu.Item>
       </Menu>
     </div>
   );

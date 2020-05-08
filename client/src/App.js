@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ViewCertificate from './containers/view-certificate/ViewCertificate';
 import RegisterCompany from './containers/register-company/RegisterCompany';
 import AwardCertificate from './containers/award-certificate/AwardCertificate';
+import FindCertificate from './containers/find-certificate/FindCertificate';
 import contract from './shared/contract';
 import './App.css';
 
@@ -42,6 +43,7 @@ const App = () => {
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/find-certificate/" component={FindCertificate} />
           <Route path="/view-certificate/:uuid" component={ViewCertificate} />
           <Route path="/register-company" component={RegisterCompany} />
           <Route path="/award-certificate" component={AwardCertificate} />

@@ -54,3 +54,11 @@ export const registerCompanyFormFields = [
     rules: [requiredRule, urlRule]
   }
 ];
+
+export const findCertificateFields = [
+  {
+    label: 'Certificate uuid',
+    name: 'uuid',
+    rules: [requiredRule]
+  }
+];
