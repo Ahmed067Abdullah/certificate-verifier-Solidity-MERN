@@ -15,6 +15,15 @@ const AwardCertificate = () => {
 
   useEffect(() => {
     checkCompany(setCompanyLoading, setComapnyNotRegistered, setCompany);
+
+    window.ethereum.on('accountsChanged', () => {
+      setCompanyLoading(true);
+      checkCompany(setCompanyLoading, setComapnyNotRegistered, setCompany);
+    });
+
+    return () => {
+      window.ethereum.removeAllListeners();
+    }
   }, []);
 
   const onFinish = values => {

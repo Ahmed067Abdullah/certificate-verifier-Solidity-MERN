@@ -15,6 +15,15 @@ const RegisterCompany = () => {
 
   useEffect(() => {
     checkCompany(setCompanyLoading, setComapnyNotRegistered);
+
+    window.ethereum.on('accountsChanged', () => {
+      setCompanyLoading(true);
+      checkCompany(setCompanyLoading, setComapnyNotRegistered);
+    });
+
+    return () => {
+      window.ethereum.removeAllListeners();
+    }
   }, []);
 
   const onFinish = values => {

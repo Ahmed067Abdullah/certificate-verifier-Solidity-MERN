@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Spin } from 'antd';
 import moment from 'moment';
-import * as jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import stylesheet from './ViewCertificate.styles';
 import { createUseStyles } from 'react-jss';
 import { getCertificate } from './ViewCertificate.service';
@@ -18,6 +17,7 @@ const ViewCertificate = ({ match }) => {
         setCertificate(res);
       })
       .catch(err => console.log(err));
+      console.log(certificate);
   }, []);
 
   const classes = createUseStyles(stylesheet())();
@@ -47,15 +47,6 @@ const ViewCertificate = ({ match }) => {
     return diffString;
   }
 
-  const exportPDF = () => {
-    html2canvas(document.querySelector(".certificate-container")).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'PNG', 0, 0);
-      pdf.save("download.pdf");
-    });
-  }
-
   const uuid = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed';
   const name = 'Ahmed Abdullah';
   const achievement = 'CMAD course';
@@ -67,8 +58,12 @@ const ViewCertificate = ({ match }) => {
   const user = 'Amin Ahmed Khan';
   const designation = 'CEO';
   const awardedAt = 1587551502739;
-  return (
-    <div className='view-certificate-container'>
+
+  return certificateLoading
+    ? <div className="initial-spinner-container">
+      <Spin size="large" />
+    </div>
+    : <div className='view-certificate-container'>
       {/* <button onClick={exportPDF}>Export PDF</button> */}
       <div className={classes['certificate-container']}>
         <div className={classes['styled-div']}>
@@ -98,7 +93,6 @@ const ViewCertificate = ({ match }) => {
         <p className={classes['certificate-uuid']}>{uuid}</p>
       </div >
     </div >
-  )
 }
 
 export default ViewCertificate;
