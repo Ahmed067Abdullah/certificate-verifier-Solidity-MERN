@@ -14,6 +14,7 @@ const ViewCertificate = ({ match }) => {
     const { params: { uuid } } = match;
     getCertificate(uuid)
       .then(res => {
+        setCertificateLoading(false);
         setCertificate(res);
       })
       .catch(err => console.log(err));

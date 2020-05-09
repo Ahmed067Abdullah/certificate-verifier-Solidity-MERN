@@ -1,4 +1,11 @@
 @import '~antd/dist/antd.css';
 body {
-    background-color: #fafafa;
+  background-color: #fafafa;
+}
+
+.initial-spinner-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
