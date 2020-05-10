@@ -8,7 +8,6 @@ import { getCertificate } from '../view-certificate/ViewCertificate.service';
 // import { SketchPicker } from 'react-color';
 
 const QueryCertificate = () => {
-  console.log(window)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formEl = useRef(null);
 

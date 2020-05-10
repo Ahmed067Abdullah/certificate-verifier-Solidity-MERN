@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Spin } from 'antd';
+import Spinner from '../../components/spinner/Spinner';
 import moment from 'moment';
 import stylesheet from './ViewCertificate.styles';
 import { createUseStyles } from 'react-jss';
 import { getCertificate } from './ViewCertificate.service';
 
-const ViewCertificate = ({ match }) => {
+const ViewCertificate = ({ match, history }) => {
   const [certificateLoading, setCertificateLoading] = useState(true);
   const [certificate, setCertificate] = useState({});
 
@@ -17,7 +17,8 @@ const ViewCertificate = ({ match }) => {
         setCertificate(res);
       })
       .catch(err => console.log(err));
-      console.log(certificate);
+    console.log(certificate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const classes = createUseStyles(stylesheet())();
@@ -60,11 +61,10 @@ const ViewCertificate = ({ match }) => {
   const awardedAt = 1587551502739;
 
   return certificateLoading
-    ? <div className="initial-spinner-container">
-      <Spin size="large" />
-    </div>
+    ? <Spinner />
     : <div className='view-certificate-container'>
       {/* <button onClick={exportPDF}>Export PDF</button> */}
+      <button onClick={() => history.push('/home')}>Go back to Application</button>
       <div className={classes['certificate-container']}>
         <div className={classes['styled-div']}>
           <img src={logoURL} alt="Company logo" />
@@ -91,8 +91,8 @@ const ViewCertificate = ({ match }) => {
           <p className={classes['issued-date']}>{moment(awardedAt).format('Do MMMM, YYYY.')}</p>
         </div>
         <p className={classes['certificate-uuid']}>{uuid}</p>
-      </div >
-    </div >
+      </div>
+    </div>
 }
 
 export default ViewCertificate;

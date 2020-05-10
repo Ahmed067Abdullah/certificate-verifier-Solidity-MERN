@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
-import { Spin } from 'antd';
-
+import Spinner from './components/spinner/Spinner';
 import contract from './shared/contract';
 import './App.css';
 import getRoutes from './shared/routes';
@@ -50,9 +49,7 @@ const App = () => {
       <div className="App">
         {metamastStatus
           ? getRoutes(metamastStatus)
-          : <div className="initial-spinner-container">
-            <Spin size="large" />
-          </div>}
+          : <Spinner />}
       </div>
     </Router>
   );
