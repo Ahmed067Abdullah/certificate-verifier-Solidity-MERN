@@ -7,6 +7,11 @@ const NavBar = () => {
   return (
     <div>
       <Menu onClick={e => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal">
+        <Menu.Item key="home">
+          <Link to="/home">
+            Home
+          </Link>
+        </Menu.Item>
         <Menu.Item key="register-company">
           <Link to="/register-company">
             Register Company
