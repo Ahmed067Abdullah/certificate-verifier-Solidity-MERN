@@ -8,6 +8,6 @@ router.get("/", certificateValidater.validateGetCertificates, certificateControl
 
 router.post("/", certificateValidater.validateCreateCertificate, certificateController.createCertificate);
 
-// router.put("/:id", certificateController.editTodo);
+router.put("/:_id/", certificateValidater.validateCertificateUpdateStatus, certificateController.updateCertificateStatus);
 
 module.exports = router;

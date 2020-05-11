@@ -12,7 +12,7 @@ const validateGetCertificates = (req, res, next) => {
   const { error } = schema.validate({ companyAddress });
 
   if (error) {
-    res.status(403).send({
+    return res.status(403).send({
       success: false,
       error: error.details[0].message
     });
@@ -41,7 +41,26 @@ const validateCreateCertificate = (req, res, next) => {
   const { error } = schema.validate(req.body);
 
   if (error) {
-    res.status(403).send({
+    return res.status(403).send({
+      success: false,
+      error: error.details[0].message
+    });
+  }
+  next();
+};
+
+const validateCertificateUpdateStatus = (req, res, next) => {
+  const schema = Joi.object({
+    status: Joi.number()
+      .valid(1, 2)
+      .required()
+      .error(e => errorMessagesGenerator(e, 'Status'))
+  });
+
+  const { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.status(403).send({
       success: false,
       error: error.details[0].message
     });
@@ -52,6 +71,7 @@ const validateCreateCertificate = (req, res, next) => {
 module.exports = {
   validateGetCertificates,
   validateCreateCertificate,
+  validateCertificateUpdateStatus
 };
 
 

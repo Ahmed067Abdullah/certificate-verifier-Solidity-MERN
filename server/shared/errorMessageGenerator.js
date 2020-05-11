@@ -1,6 +1,5 @@
 const errorMessagesGenerator = (errors, fieldName) => {
   errors.forEach(err => {
-    console.log(err);
     switch (err.code) {
       case "any.required":
         err.message = `${fieldName} is required!`;
@@ -17,7 +16,9 @@ const errorMessagesGenerator = (errors, fieldName) => {
       case "string.min":
         err.message = `${fieldName} must have at least ${err.local.limit} character!`;
         break;
-
+      case "any.only":
+        err.message = `${fieldName} must have one of [${err.local.valids}] character!`;
+        break;
       default:
         break;
     }

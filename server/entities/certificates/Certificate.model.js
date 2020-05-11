@@ -13,6 +13,11 @@ const CertificatesSchema = new Schema({
   candidateName: {
     required: true,
     type: String
+  },
+  status: {
+    required: true,
+    default: 0,
+    type: Number
   }
 });
 
