@@ -6,8 +6,8 @@ const getCertificates = async (req, res) => {
 };
 
 const createCertificate = async (req, res) => {
-  console.log(req.body);
-  const savedCertificate = await certificateRepository.createCertificate(req.body);
+  const { candidateName, uuid, companyAddress } = req.body;
+  const savedCertificate = await certificateRepository.createCertificate({ candidateName, uuid, companyAddress });
   res.send(savedCertificate);
 };
 

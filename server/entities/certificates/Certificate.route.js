@@ -1,11 +1,12 @@
 const express = require("express");
 const certificateController = require("./Certificate.controller");
+const certificateValidater = require("./Certificate.validation");
 
 const router = express.Router();
 
-router.get("/", certificateController.getCertificates);
+router.get("/", certificateValidater.validateGetCertificates, certificateController.getCertificates);
 
-router.post("/", certificateController.createCertificate);
+router.post("/", certificateValidater.validateCreateCertificate, certificateController.createCertificate);
 
 // router.put("/:id", certificateController.editTodo);
 
