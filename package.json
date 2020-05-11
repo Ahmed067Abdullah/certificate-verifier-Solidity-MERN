@@ -1,0 +1,29 @@
+{
+  "name": "certificate-verifier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "cd client && npm install",
+    "server-install": "cd server && npm install",
+    "install-all": "npm run client-install && npm run server-install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd server && nodemon index.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ahmed067Abdullah/certificate-verifier.git"
+  },
+  "author": "Ahmed Abdullah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ahmed067Abdullah/certificate-verifier/issues"
+  },
+  "homepage": "https://github.com/Ahmed067Abdullah/certificate-verifier#readme",
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
