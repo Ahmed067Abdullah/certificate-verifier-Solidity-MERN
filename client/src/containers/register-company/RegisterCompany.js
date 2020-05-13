@@ -6,6 +6,7 @@ import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './RegisterCompany.styles';
 import { registerCompany } from './RegisterCompany.service';
 import { checkCompany } from '../award-certificate/AwardCertificate.service';
+import showNotification from '../../shared/showNotification';
 // import { SketchPicker } from 'react-color';
 
 const RegisterCompany = () => {
@@ -30,10 +31,11 @@ const RegisterCompany = () => {
     setIsSubmitting(true);
     registerCompany(values)
       .then(res => {
-
+        showNotification('Success', 'Company registered successfully');
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
+        showNotification('Error', 'Error occurred while registering company');
       })
       .finally(() => {
         setIsSubmitting(false);

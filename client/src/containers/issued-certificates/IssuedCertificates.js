@@ -3,6 +3,7 @@ import { Row, Col, Card, Button } from 'antd';
 import Navbar from '../../components/nav-bar/NavBar';
 import stylesheet from './IssuedCertificates.styles';
 import { getIssuedCertificates } from './IssuedCertificates.service';
+import showNotification from '../../shared/showNotification';
 
 const IssuedCertificates = () => {
 
@@ -26,6 +27,10 @@ const IssuedCertificates = () => {
     getIssuedCertificates()
       .then(res => {
         setCertificates(res.data);
+      })
+      .catch(err => {
+        showNotification('Error', err, true);
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);

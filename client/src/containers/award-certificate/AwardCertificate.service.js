@@ -2,6 +2,7 @@ import contract from '../../shared/contract';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
 import axios from 'axios';
+import showNotification from '../../shared/showNotification';
 
 export const checkCompany = (setCompanyLoading, setComapnyNotRegistered, setCompany = () => { }) => {
   const { ethereum } = window;
@@ -14,7 +15,8 @@ export const checkCompany = (setCompanyLoading, setComapnyNotRegistered, setComp
         console.log('Comapny:', res)
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
+        showNotification('Error', 'Error occurred while checking address');
       })
       .finally(() => {
         setCompanyLoading(false);
@@ -69,6 +71,11 @@ export const awardCertificate = values => {
     } catch (e) {
       if (certificate) {
         await updatedCertificateStatus(certificate._id, 2)
+      }
+      if(e.response) {
+        showNotification('Error', e, true);
+      } else {
+        showNotification('Error', 'Error occurred while creating certificate');
       }
       console.log(e);
       reject(e);

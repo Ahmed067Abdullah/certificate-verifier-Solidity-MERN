@@ -4,6 +4,7 @@ import moment from 'moment';
 import stylesheet from './ViewCertificate.styles';
 import { createUseStyles } from 'react-jss';
 import { getCertificate } from './ViewCertificate.service';
+import showNotification from '../../shared/showNotification';
 
 const ViewCertificate = ({ match, history }) => {
   const [certificateLoading, setCertificateLoading] = useState(true);
@@ -16,7 +17,10 @@ const ViewCertificate = ({ match, history }) => {
         setCertificateLoading(false);
         setCertificate(res);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        showNotification('Error', 'Error occurred while fetching certificate');
+        console.log(err);
+      });
     console.log(certificate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

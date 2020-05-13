@@ -5,6 +5,7 @@ import { findCertificateFields as formFields } from '../../shared/formFields';
 import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './FindCertificate.styles';
 import { getCertificate } from '../view-certificate/ViewCertificate.service';
+import showNotification from '../../shared/showNotification';
 // import { SketchPicker } from 'react-color';
 
 const QueryCertificate = () => {
@@ -26,6 +27,10 @@ const QueryCertificate = () => {
           window.open(`${window.location.origin}/view-certificate/${values.uuid}`)
         }
         console.log(res);
+      })
+      .catch(err => {
+        showNotification('Error', 'Error occurred while checking address');
+        console.log(err);
       })
       .finally(() => {
         setIsSubmitting(false);

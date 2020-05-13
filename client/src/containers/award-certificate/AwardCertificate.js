@@ -6,6 +6,7 @@ import { awardCertificateFormFields as formFields } from '../../shared/formField
 import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './AwardCertificate.styles';
 import { awardCertificate, checkCompany } from './AwardCertificate.service';
+import showNotification from '../../shared/showNotification';
 
 const AwardCertificate = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +32,7 @@ const AwardCertificate = () => {
     if (!comapnyNotRegistered) {
       awardCertificate(values)
         .then(res => {
-
+          showNotification('Success', 'Certificate created successfully');
         })
         .catch(err => {
           console.log(err)
