@@ -9,6 +9,12 @@ const urlRule = {
   message: 'Invalid URL',
 }
 
+const hexValueRule = {
+  //eslint-disable-next-line
+  pattern: new RegExp(/^#(?:[0-9a-fA-F]{3}){1,2}$/gm),
+  message: 'Invalid Hex Value',
+}
+
 export const awardCertificateFormFields = [
   {
     label: 'Candidate Name',
@@ -53,6 +59,16 @@ export const registerCompanyFormFields = [
     label: 'Company Logo URL',
     name: 'logo',
     rules: [requiredRule, urlRule]
+  },
+  {
+    label: 'Primary Color',
+    name: 'primaryColor',
+    rules: [hexValueRule]
+  },
+  {
+    label: 'Secondary Color',
+    name: 'secondaryColor',
+    rules: [hexValueRule]
   }
 ];
 

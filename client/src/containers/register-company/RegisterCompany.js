@@ -7,7 +7,6 @@ import stylesheet from './RegisterCompany.styles';
 import { registerCompany } from './RegisterCompany.service';
 import { checkCompany } from '../award-certificate/AwardCertificate.service';
 import showNotification from '../../shared/showNotification';
-// import { SketchPicker } from 'react-color';
 
 const RegisterCompany = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,10 +41,6 @@ const RegisterCompany = () => {
       });
   };
 
-  // const handleChangeComplete = (color) => {
-  //   console.log(color);
-  // };
-
   const classes = stylesheet();
 
   const companyAlreadyRegistered = !comapnyNotRegistered;
@@ -75,10 +70,7 @@ const RegisterCompany = () => {
           >
             <Input disabled={isSubmitting || companyAlreadyRegistered} />
           </Form.Item>)}
-          {/* <SketchPicker
-          onChange={e => console.log(e)}
-          onChangeComplete={handleChangeComplete}
-        /> */}
+
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={companyAlreadyRegistered}>
               Submit

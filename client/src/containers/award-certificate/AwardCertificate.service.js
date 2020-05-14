@@ -36,7 +36,7 @@ export const updatedCertificateStatus = async (_id, status) => {
 export const awardCertificate = values => {
   return new Promise(async (resolve, reject) => {
     const { candidateName, duration, position, presenter, presenterDesignation } = values;
-    const { ethereum } = window;
+    const { ethereum: { selectedAddress } } = window;
     const uuid = uuidv4();
     const startDate = moment(duration[0]).unix().toString();
     const endDate = moment(duration[1]).unix().toString();
@@ -45,7 +45,7 @@ export const awardCertificate = values => {
     try {
       certificate = await saveCertificate({
         uuid,
-        companyAddress: ethereum.selectedAddress,
+        companyAddress: selectedAddress,
         candidateName
       });
 
@@ -58,7 +58,7 @@ export const awardCertificate = values => {
         presenter,
         presenterDesignation
       )
-        .send({ from: ethereum.selectedAddress }, (err, address) => {
+        .send({ from: selectedAddress }, (err, address) => {
           if (err) {
             console.log(err);
             return;
@@ -72,7 +72,7 @@ export const awardCertificate = values => {
       if (certificate) {
         await updatedCertificateStatus(certificate._id, 2)
       }
-      if(e.response) {
+      if (e.response) {
         showNotification('Error', e, true);
       } else {
         showNotification('Error', 'Error occurred while creating certificate');
