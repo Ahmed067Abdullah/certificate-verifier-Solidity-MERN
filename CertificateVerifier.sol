@@ -5,6 +5,8 @@ contract CertificateVerifier {
         string name;
         string logoURL;
         string website;
+        string primaryColor;
+        string secondaryColor;
         bool isSet;
     }
     
@@ -22,9 +24,9 @@ contract CertificateVerifier {
     mapping (address => Company) Companies;
     mapping (string => Certificate) Certificates;
     
-    function registerCompany(string memory name, string memory  logoURL, string memory  website) public returns (string memory) {
+    function registerCompany(string memory name, string memory  logoURL, string memory  website, string memory  primaryColor, string memory  secondaryColor) public returns (string memory) {
         require(!Companies[tx.origin].isSet, "Address already in use");
-        Companies[tx.origin] = Company(name, logoURL, website, true);
+        Companies[tx.origin] = Company(name, logoURL, website, primaryColor, secondaryColor, true);
     }
     
     function getCompany(address companyAddress) public view returns (string memory) {
