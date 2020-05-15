@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button, Card, DatePicker } from 'antd';
 import { Link } from "react-router-dom";
 import Navbar from '../../components/nav-bar/NavBar';
@@ -13,6 +13,7 @@ const AwardCertificate = () => {
   const [comapny, setCompany] = useState('');
   const [comapnyLoading, setCompanyLoading] = useState(true);
   const [comapnyNotRegistered, setComapnyNotRegistered] = useState(true);
+  const formEl = useRef(null);
 
   useEffect(() => {
     checkCompany(setCompanyLoading, setComapnyNotRegistered, setCompany);
@@ -33,6 +34,9 @@ const AwardCertificate = () => {
       awardCertificate(values)
         .then(res => {
           showNotification('Success', 'Certificate created successfully');
+          if (formEl.current) {
+            formEl.current.resetFields();
+          }
         })
         .catch(err => {
           console.log(err)
@@ -62,6 +66,7 @@ const AwardCertificate = () => {
           {...layout}
           name="register-comapny"
           onFinish={onFinish}
+          ref={formEl}
         >
           {formFields.map(field => <Form.Item
             key={field.name}

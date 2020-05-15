@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button, Card } from 'antd';
 import Navbar from '../../components/nav-bar/NavBar';
 import { registerCompanyFormFields as formFields } from '../../shared/formFields';
@@ -12,6 +12,7 @@ const RegisterCompany = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [comapnyLoading, setCompanyLoading] = useState(true);
   const [comapnyNotRegistered, setComapnyNotRegistered] = useState(true);
+  const formEl = useRef(null);
 
   useEffect(() => {
     checkCompany(setCompanyLoading, setComapnyNotRegistered);
@@ -31,6 +32,10 @@ const RegisterCompany = () => {
     registerCompany(values)
       .then(res => {
         showNotification('Success', 'Company registered successfully');
+        setComapnyNotRegistered(false);
+        if (formEl.current) {
+          formEl.current.resetFields();
+        }
       })
       .catch(err => {
         console.log(err);
@@ -61,6 +66,7 @@ const RegisterCompany = () => {
           {...layout}
           name="register-comapny"
           onFinish={onFinish}
+          ref={formEl}
         >
           {formFields.map(field => <Form.Item
             key={field.name}

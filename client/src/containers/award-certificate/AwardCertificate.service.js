@@ -25,11 +25,11 @@ export const checkCompany = (setCompanyLoading, setComapnyNotRegistered, setComp
 }
 
 export const saveCertificate = async payload => {
-  await axios.post('http://localhost:5000/api/certificates', payload);
+  return await axios.post('http://localhost:5000/api/certificates', payload);
 };
 
 export const updatedCertificateStatus = async (_id, status) => {
-  await axios.put(`http://localhost:5000/api/certificates${_id}`, { status });
+  await axios.put(`http://localhost:5000/api/certificates/${_id}`, { status });
 };
 
 
@@ -43,11 +43,11 @@ export const awardCertificate = values => {
 
     let certificate = null;
     try {
-      certificate = await saveCertificate({
+      certificate = (await saveCertificate({
         uuid,
         companyAddress: selectedAddress,
         candidateName
-      });
+      })).data;
 
       await contract.methods.awardCertificate(
         uuid,

@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const certificates = require("./entities/certificates/Certificate.route");
+const certificate = require("./entities/certificate/Certificate.route");
 const mongoURI = require("./config/keys").mongoURI;
 
 const app = express();
@@ -17,7 +17,7 @@ mongoose
   .then(() => console.log("Connected to the DB"))
   .catch(err => console.log("Error Occured while connecting to DB", err));
 
-app.use("/api/certificates", certificates);
+app.use("/api/certificates", certificate);
 
 app.listen(port, () => {
   console.log(`server started on port ${port}`);
