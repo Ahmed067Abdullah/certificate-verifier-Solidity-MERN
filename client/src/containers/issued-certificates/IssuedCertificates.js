@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { Row, Col, Card, Button, Result } from 'antd';
 import Navbar from '../../components/nav-bar/NavBar';
 import stylesheet from './IssuedCertificates.styles';
 import { getIssuedCertificates } from './IssuedCertificates.service';
@@ -57,17 +58,24 @@ const IssuedCertificates = () => {
         </Button>
       </Card>
     </Col>);
-  } else {
-    certificatesJSX = <p>No Certificates Found</p>;
   }
 
   return (
     <div>
       <Navbar />
       <div className={classes['certificates-container']}>
-        <Row gutter={[16, 24]}>
-          {certificatesJSX}
-        </Row>
+        {certificatesJSX
+          ? <Row gutter={[16, 24]}>
+            {certificatesJSX}
+          </Row>
+          : <div className={classes['empty-state-container']}>
+            <Result
+              status={404}
+              title='No certificate found'
+              subTitle={<p>Click <Link to="/award-certificate">here</Link> to issue your first certificate</p>}
+            />
+          </div>}
+
       </div>
     </div>
   );

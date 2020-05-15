@@ -9,6 +9,12 @@ const styles = {
   },
   'candidate-name': {
     'fontWeight': 500
+  },
+  'empty-state-container': {
+    'alignItems': 'center',
+    'display': 'flex',
+    'height': 'calc(100vh - 120px)',
+    'justifyContent': 'center'
   }
 };
 
