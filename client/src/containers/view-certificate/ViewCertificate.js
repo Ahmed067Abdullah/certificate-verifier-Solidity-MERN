@@ -1,102 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import Spinner from '../../components/spinner/Spinner';
-import moment from 'moment';
-import stylesheet from './ViewCertificate.styles';
-import { createUseStyles } from 'react-jss';
+import { Result } from 'antd';
 import { getCertificate } from './ViewCertificate.service';
+import { getCompany } from '../award-certificate/AwardCertificate.service';
 import showNotification from '../../shared/showNotification';
+import Spinner from '../../components/spinner/Spinner';
+import Certificate from '../../components/certificate/Certificate';
+import stylesheet from './ViewCertificate.styles';
 
 const ViewCertificate = ({ match, history }) => {
   const [certificateLoading, setCertificateLoading] = useState(true);
   const [certificate, setCertificate] = useState({});
+  const [company, setCompany] = useState({});
+  const [certificateError, setCertificateError] = useState('');
 
   useEffect(() => {
-    const { params: { uuid } } = match;
-    getCertificate(uuid)
-      .then(res => {
-        setCertificateLoading(false);
-        setCertificate(res);
-      })
-      .catch(err => {
-        showNotification('Error', 'Error occurred while fetching certificate');
-        console.log(err);
-      });
-    console.log(certificate);
+    setupCertificate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const classes = createUseStyles(stylesheet())();
+  const { params: { uuid } } = match;
 
-  const getDifference = (startDate, endDate) => {
-    const diff = Math.floor(moment(endDate).diff(moment(startDate), 'months', true));
-
-    const years = Math.floor(diff / 12);
-    let diffString = '';
-    if (years) {
-      diffString = years + ' year';
-      if (years > 1) {
-        diffString += 's';
+  const setupCertificate = async () => {
+    try {
+      const certificateObj = await getCertificate(uuid);
+      setCertificate(certificateObj);
+      console.log(certificateObj);
+      if (certificateObj[0] !== "") {
+        const companyObj = await getCompany(certificateObj['4']);
+        console.log(companyObj);
+        setCompany(companyObj);
+        setCertificateLoading(false);
+        if (companyObj['0'] === '') {
+          setCertificateError('Certificate issuer not found');
+        }
+      } else {
+        setCertificateLoading(false);
+        setCertificateError('Certificate not found');
       }
     }
-
-    const months = diff % 12;
-    if (months) {
-      if (years) {
-        diffString += ' & ';
-      }
-      diffString += months + ' month';
-      if (months > 1) {
-        diffString += 's';
-      }
+    catch (e) {
+      showNotification('Error', 'Error occurred while fetching certificate');
+      console.log(e);
     }
-    return diffString;
   }
 
-  const uuid = '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed';
-  const name = 'Ahmed Abdullah';
-  const achievement = 'CMAD course';
-  const logoURL = 'https://ipac.page/images/brand-logo-1.jpg';
-  const startDate = 1581111186969;
-  const endDate = 1587551502739;
-  const difference = getDifference(startDate, endDate);
-  const companyName = 'Sudofy';
-  const user = 'Amin Ahmed Khan';
-  const designation = 'CEO';
-  const awardedAt = 1587551502739;
+  const classes = stylesheet();
 
   return certificateLoading
     ? <Spinner />
-    : <div className='view-certificate-container'>
-      {/* <button onClick={exportPDF}>Export PDF</button> */}
-      <button onClick={() => history.push('/home')}>Go back to Application</button>
-      <div className={classes['certificate-container']}>
-        <div className={classes['styled-div']}>
-          <img src={logoURL} alt="Company logo" />
-        </div>
-        <div className={classes['main-content']}>
-          <p className={classes['main-heading']}>
-            <span>Certificate </span>
-            of Achievement</p>
-          <p className={classes['certificate-text']}>
-            This certificate is presented to
-            <span className='name'>{name}</span>
-            For successfully completing&nbsp;
-            <span>{achievement}</span> from&nbsp;
-            <span>{moment(startDate).format('MMMM Do YYYY')}</span> to&nbsp;
-            <span>{moment(endDate).format('MMMM Do YYYY')}</span>&nbsp;
-            {difference ? `(${difference})` : ''}
-          </p>
-        </div>
-        <div className={classes['certificate-footer']}>
-          <div>
-            <p className={classes['issuer']}>{user}</p>
-            <p className={classes['issuer-designation']}>{designation} at {companyName}</p>
-          </div>
-          <p className={classes['issued-date']}>{moment(awardedAt).format('Do MMMM, YYYY.')}</p>
-        </div>
-        <p className={classes['certificate-uuid']}>{uuid}</p>
+    : certificateError
+      ? <div className={classes['not-found-container']}>
+        <Result
+          status={404}
+          title={certificateError}
+        />
       </div>
-    </div>
+      : <div className='view-certificate-container'>
+        {/* <button onClick={exportPDF}>Export PDF</button> */}
+        <button onClick={() => history.push('/home')}>Go back to Application</button>
+        <Certificate uuid={uuid} certificate={certificate} company={company} />
+      </div>
 }
 
 export default ViewCertificate;

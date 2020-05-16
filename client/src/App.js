@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import Spinner from './components/spinner/Spinner';
-import contract from './shared/contract';
 import './App.css';
 import getRoutes from './shared/routes';
 
@@ -21,24 +20,6 @@ const App = () => {
         })
         .catch(err => {
           setMetamastStatus(2);
-          console.log(err)
-        });
-
-      contract.methods.getCertificate('05879432-81a9-464b-a275-9502ee129202')
-        .call({ from: ethereum.selectedAddress })
-        .then(res => {
-          console.log('App, Certificate:', res)
-        })
-        .catch(err => {
-          console.log(err)
-        });
-
-      contract.methods.getCompany('0x4Af3462EdE5F27469cF2Ef9F590947f0648dDecf')
-        .call({ from: ethereum.selectedAddress })
-        .then(res => {
-          console.log('App, Comapny:', res)
-        })
-        .catch(err => {
           console.log(err)
         });
     }
