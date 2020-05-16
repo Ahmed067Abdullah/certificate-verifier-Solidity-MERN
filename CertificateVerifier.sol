@@ -29,8 +29,14 @@ contract CertificateVerifier {
         Companies[tx.origin] = Company(name, logoURL, website, primaryColor, secondaryColor, true);
     }
     
-    function getCompany(address companyAddress) public view returns (string memory) {
-        return Companies[companyAddress].name;
+    function getCompany(address companyAddress) public view returns (string memory, string memory, string memory, string memory, string memory) {
+        return (
+            Companies[companyAddress].name,
+            Companies[companyAddress].logoURL, 
+            Companies[companyAddress].website,
+            Companies[companyAddress].primaryColor,
+            Companies[companyAddress].secondaryColor
+        );
     }
     
     function awardCertificate(string memory uuid, string memory name, string memory  position, string memory startDate, string memory  endDate, string memory  awarderName, string memory  awarderDesignation) public {
@@ -39,7 +45,15 @@ contract CertificateVerifier {
         Certificates[uuid] = Certificate(name, position, startDate, endDate, tx.origin, awarderName, awarderDesignation,true);
     }
     
-    function getCertificate(string memory uuid) public view returns (string memory) {
-        return Certificates[uuid].candidateName;
+    function getCertificate(string memory uuid) public view returns (string memory, string memory, string memory, string memory, address, string memory, string memory) {
+        return (
+            Certificates[uuid].candidateName,
+            Certificates[uuid].position,
+            Certificates[uuid].startDate,
+            Certificates[uuid].endDate,
+            Certificates[uuid].awarder,
+            Certificates[uuid].awarderName,
+            Certificates[uuid].awarderDesignation
+        );
     }
 }
