@@ -16,7 +16,7 @@ const QueryCertificate = () => {
     setIsSubmitting(true);
     getCertificate(values.uuid)
       .then(res => {
-        if (res === '') {
+        if (res['0'] === '') {
           formEl.current.setFields([
             {
               name: 'uuid',

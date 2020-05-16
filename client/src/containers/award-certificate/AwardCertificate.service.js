@@ -4,14 +4,18 @@ import moment from 'moment';
 import axios from 'axios';
 import showNotification from '../../shared/showNotification';
 
+export const getCompany = (companyAddress, ownAddress) => {
+  return contract.methods.getCompany(companyAddress)
+    .call({ from: ownAddress })
+}
+
 export const checkCompany = (setCompanyLoading, setComapnyNotRegistered, setCompany = () => { }) => {
   const { ethereum } = window;
   if (ethereum.selectedAddress) {
-    contract.methods.getCompany(ethereum.selectedAddress)
-      .call({ from: ethereum.selectedAddress })
+    getCompany(ethereum.selectedAddress, ethereum.selectedAddress)
       .then(res => {
         setCompany(res);
-        setComapnyNotRegistered(res === '');
+        setComapnyNotRegistered(res['0'] === '');
         console.log('Comapny:', res)
       })
       .catch(err => {
@@ -29,7 +33,7 @@ export const saveCertificate = async payload => {
 };
 
 export const updatedCertificateStatus = async (_id, status) => {
-  await axios.put(`http://localhost:5000/api/certificates/${_id}`, { status });
+  return await axios.put(`http://localhost:5000/api/certificates/${_id}`, { status });
 };
 
 

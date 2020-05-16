@@ -82,7 +82,7 @@ const AwardCertificate = () => {
             <Button type="primary" htmlType="submit" loading={isSubmitting} disabled={comapnyNotRegistered}>
               Submit
             </Button>
-            {comapny ? <p className={classes['company-name']}>from <span>{comapny}</span></p> : ''}
+            {comapny['0'] ? <p className={classes['company-name']}>from <span>{comapny['0']}</span></p> : ''}
           </Form.Item>
         </Form>
       </Card>
