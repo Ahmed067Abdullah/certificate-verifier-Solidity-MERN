@@ -1,7 +1,7 @@
 const userRepository = require("./User.respository");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const keys = require("../../config/keys")
+const keys = require("../../config/keys");
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -59,8 +59,52 @@ const verifyMe = (req, res) => {
   });
 };
 
+const getFavourites = async (req, res) => {
+  const user = await userRepository.getUserById(req.user.id);
+  if (!user) {
+    return res.status(404).json({ success: false, error: 'User not found' });
+  }
+  const { favourites } = await userRepository.getFavourites(req.user.id)
+  return res.json({ favourites });
+}
+
+const addToFavourites = async (req, res) => {
+  const user = await userRepository.getUserById(req.user.id);
+  if (!user) {
+    return res.status(404).json({ success: false, error: 'User not found' });
+  }
+
+  const { certificateId } = req.body;
+  if (user.favourites.includes(certificateId)) {
+    return res.status(400).json({ success: false, error: 'Certificate is already starred' });
+  }
+
+  user.favourites.push(certificateId)
+  await user.save();
+  return res.json({ success: true });
+}
+
+const removeFromFavourites = async (req, res) => {
+  const user = await userRepository.getUserById(req.user.id);
+  if (!user) {
+    return res.status(404).json({ success: false, error: 'User not found' });
+  }
+
+  const { certificateId } = req.body;
+  if (!user.favourites.includes(certificateId)) {
+    return res.status(400).json({ success: false, error: 'Certificate is not starred' });
+  }
+
+  user.favourites = user.favourites.filter(id => id.toString() !== certificateId);
+  await user.save();
+  return res.json({ success: true });
+}
+
 module.exports = {
   register,
   login,
-  verifyMe
+  verifyMe,
+  getFavourites,
+  addToFavourites,
+  removeFromFavourites
 };

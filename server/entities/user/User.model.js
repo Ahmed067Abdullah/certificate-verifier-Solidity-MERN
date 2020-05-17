@@ -13,6 +13,12 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  favourites: {
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: 'certificates'
+    }]
   }
 });
 

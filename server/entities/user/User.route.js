@@ -15,4 +15,20 @@ router.get("/me",
   userController.verifyMe
 );
 
+router.get("/favourites",
+  userValidater.validateMe,
+  passport.authenticate('jwt', { session: false }),
+  userController.getFavourites
+);
+
+router.put("/add/to/favourites",
+  passport.authenticate('jwt', { session: false }),
+  userController.addToFavourites
+);
+
+router.put("/remove/from/favourites",
+  passport.authenticate('jwt', { session: false }),
+  userController.removeFromFavourites
+);
+
 module.exports = router;
