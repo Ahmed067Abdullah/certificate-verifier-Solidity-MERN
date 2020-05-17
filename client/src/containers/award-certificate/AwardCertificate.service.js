@@ -28,12 +28,12 @@ export const checkCompany = (setCompanyLoading, setComapnyNotRegistered, setComp
   }
 }
 
-export const saveCertificate = async payload => {
-  return await axios.post('http://localhost:5000/api/certificates', payload);
+export const saveCertificate = payload => {
+  return axios.post('http://localhost:5000/api/certificates', payload);
 };
 
-export const updatedCertificateStatus = async (_id, status) => {
-  return await axios.put(`http://localhost:5000/api/certificates/${_id}`, { status });
+export const updatedCertificateStatus = (_id, status) => {
+  return axios.put(`http://localhost:5000/api/certificates/${_id}`, { status });
 };
 
 
@@ -47,12 +47,6 @@ export const awardCertificate = values => {
 
     let certificate = null;
     try {
-      certificate = (await saveCertificate({
-        uuid,
-        companyAddress: selectedAddress,
-        candidateName
-      })).data;
-
       await contract.methods.awardCertificate(
         uuid,
         candidateName,
@@ -62,14 +56,18 @@ export const awardCertificate = values => {
         presenter,
         presenterDesignation
       )
-        .send({ from: selectedAddress }, (err, address) => {
+        .send({ from: selectedAddress }, async (err, address) => {
           if (err) {
             console.log(err);
             return;
           }
+          certificate = (await saveCertificate({
+            uuid,
+            companyAddress: selectedAddress,
+            candidateName
+          })).data;
           console.log('Tx Address:', address);
         });
-
       await updatedCertificateStatus(certificate._id, 1);
       resolve();
     } catch (e) {

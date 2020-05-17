@@ -7,8 +7,8 @@ export const registerCompany = (values) => {
     company,
     logo,
     website,
-    primaryColor ? primaryColor : '#24C4D4',
-    secondaryColor ? secondaryColor : '#ffd700'
+    primaryColor ? primaryColor : '#1890ff',
+    secondaryColor ? secondaryColor : '#000000a6'
   )
     .send({ from: ethereum.selectedAddress }, (err, address) => {
       if (err) {

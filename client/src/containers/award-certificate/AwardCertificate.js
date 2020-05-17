@@ -29,8 +29,8 @@ const AwardCertificate = () => {
   }, []);
 
   const onFinish = values => {
-    setIsSubmitting(true);
     if (!comapnyNotRegistered) {
+      setIsSubmitting(true);
       awardCertificate(values)
         .then(res => {
           showNotification('Success', 'Certificate created successfully');
