@@ -6,6 +6,7 @@ import RegisterCompany from '../containers/register-company/RegisterCompany';
 import AwardCertificate from '../containers/award-certificate/AwardCertificate';
 import FindCertificate from '../containers/find-certificate/FindCertificate';
 import IssuedCertificates from '../containers/issued-certificates/IssuedCertificates';
+import StarredCertificates from '../containers/starred-certificates/StarredCertificates';
 import NotFound from '../containers/not-found/NotFound';
 
 const getRoutes = status => {
@@ -24,6 +25,7 @@ const getRoutes = status => {
       <Route path="/award-certificate" component={AwardCertificate} />
       <Route path="/register-company" component={RegisterCompany} />
       <Route path="/issued-certificates" component={IssuedCertificates} />
+      <Route path="/starred-certificates" component={StarredCertificates} />
       <Redirect to="/home" />
     </Switch>
   }

@@ -32,6 +32,11 @@ const NavBar = () => {
             Issued Certificates
           </Link>
         </Menu.Item>
+        <Menu.Item key="starred-certificates">
+          <Link to="/starred-certificates">
+            Starred Certificates
+          </Link>
+        </Menu.Item>
       </Menu>
     </div>
   );
