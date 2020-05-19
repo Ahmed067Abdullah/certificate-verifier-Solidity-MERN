@@ -15,6 +15,17 @@ const styles = {
     'display': 'flex',
     'height': 'calc(100vh - 120px)',
     'justifyContent': 'center'
+  },
+  'icon-container': {
+    '& .anticon-close-circle': {
+      'cursor': 'pointer'
+    },
+    'position': 'absolute',
+    'color': '#1890ff',
+    'fontSize': '18px',
+    'zIndex': 2,
+    'top': '7px',
+    'right': '12px'
   }
 };
 
