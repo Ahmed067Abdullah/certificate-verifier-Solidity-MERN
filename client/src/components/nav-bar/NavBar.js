@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { callLogout } from '../auth-modal/AuthModal.service';
 
-const NavBar = () => {
+const NavBar = ({ user, callLogout }) => {
   const [current, setCurrent] = useState(window.location.pathname.slice(1));
   return (
     <div>
@@ -37,9 +40,21 @@ const NavBar = () => {
             Starred Certificates
           </Link>
         </Menu.Item>
+        {user.name
+          ? <Menu.Item  onClick={callLogout}>
+            Logout
+        </Menu.Item>
+          : null}
+
       </Menu>
     </div>
   );
 };
 
-export default NavBar;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ callLogout }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

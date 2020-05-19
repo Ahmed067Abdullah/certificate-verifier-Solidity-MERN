@@ -4,13 +4,13 @@ import { CloseCircleFilled, LoadingOutlined } from '@ant-design/icons';
 import Navbar from '../../components/nav-bar/NavBar';
 import AuthModal from '../../components/auth-modal/AuthModal';
 import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
-import { setUser } from '../../components/auth-modal/AuthModal.actions';
 import stylesheet from './StarredCertificates.styles';
+import { bindActionCreators } from "redux";
 import { verifyMe, getStarredCertificates, removeStarredCertificate } from './StarredCertificates.service';
+import { setUser } from '../../components/auth-modal/AuthModal.actions';
 import showNotification from '../../shared/showNotification';
 
-const StarredCertificates = ({ history, setUser }) => {
+const StarredCertificates = ({ history, setUser, user }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -18,8 +18,14 @@ const StarredCertificates = ({ history, setUser }) => {
   const [toRemove, setToRemove] = useState([]);
 
   useEffect(() => {
-    verifyUserAndFetchStarred();
+    fetchStarred();
   }, []);
+
+  useEffect(() => {
+    if(!loading && !user.id && !showAuthModal) {
+      setShowAuthModal(true)
+    }
+  }, [user]);
 
   useEffect(() => {
     const cid = toRemove[toRemove.length - 1];
@@ -29,13 +35,11 @@ const StarredCertificates = ({ history, setUser }) => {
     }
   }, [toRemove]);
 
-  const verifyUserAndFetchStarred = async () => {
+  const fetchStarred = async () => {
     const token = localStorage.getItem("certificate-verifier-token");
     if (token) {
       try {
-        let res = await verifyMe(token);
-        setUser(res.data);
-        res = await getStarredCertificates(token);
+        const res = await getStarredCertificates(token);
         setStarred(res.data.favourites)
         setIsAuthenticated(true);
       }
@@ -52,13 +56,16 @@ const StarredCertificates = ({ history, setUser }) => {
     }
   }
 
-  const userAuthenticated = flag => {
+  const userAuthenticated = async flag => {
     setTimeout(() => {
       setShowAuthModal(false);
     }, 500);
     if (flag) {
       setLoading(true);
-      verifyUserAndFetchStarred()
+      const token = localStorage.getItem("certificate-verifier-token");
+      let res = await verifyMe(token);
+      setUser(res.data);
+      fetchStarred();
     } else {
       history.goBack();
     }
@@ -133,6 +140,10 @@ const StarredCertificates = ({ history, setUser }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators({ setUser }, dispatch);
 
-export default connect(null, mapDispatchToProps)(StarredCertificates);
+export default connect(mapStateToProps, mapDispatchToProps)(StarredCertificates);
