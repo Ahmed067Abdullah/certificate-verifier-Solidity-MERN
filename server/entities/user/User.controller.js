@@ -1,4 +1,6 @@
 const userRepository = require("./User.respository");
+const certificateRepository = require("../certificate/Certificate.repository");
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const keys = require("../../config/keys");
@@ -79,11 +81,16 @@ const addToFavourites = async (req, res) => {
   }
 
   const { certificateId } = req.body;
-  if (user.favourites.includes(certificateId)) {
+  const certificate = await certificateRepository.getCertificateByUuid(certificateId);
+  if (!certificate) {
+    return res.status(404).json({ success: false, error: 'Certificate not found' });
+  }
+
+  if (user.favourites.includes(certificate._id)) {
     return res.status(400).json({ success: false, error: 'Certificate is already starred' });
   }
 
-  user.favourites.push(certificateId)
+  user.favourites.push(certificate._id)
   await user.save();
   return res.json({ success: true });
 }

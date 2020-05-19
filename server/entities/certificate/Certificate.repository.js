@@ -4,6 +4,10 @@ const getCertificateById = async _id => {
   return await Certificate.findById(_id);
 };
 
+const getCertificateByUuid = async uuid => {
+  return await Certificate.findOne({ uuid });
+};
+
 const getCertificates = async companyAddress => {
   let certificates = await Certificate.find({ companyAddress });
   if (!certificates) certificates = [];
@@ -21,6 +25,7 @@ const updateCertificateStatus = async (_id, status) => {
 
 module.exports = {
   getCertificateById,
+  getCertificateByUuid,
   getCertificates,
   createCertificate,
   updateCertificateStatus
