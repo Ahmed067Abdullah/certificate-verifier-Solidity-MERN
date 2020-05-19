@@ -3,6 +3,20 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const keys = require("../../config/keys");
 
+const sendToken = (payload, res) => {
+  jwt.sign(
+    payload,
+    keys.jwtSecret,
+    { expiresIn: 3600 },
+    (err, token) => {
+      res.json({
+        success: true,
+        token: `Bearer ${token}`
+      });
+    }
+  );
+}
+
 const register = async (req, res) => {
   const { name, email, password } = req.body;
   const existingUser = await userRepository.getUserByEmail(email);
@@ -17,7 +31,8 @@ const register = async (req, res) => {
       const createdUser = await userRepository.registerUser({
         name, email, password: hash
       });
-      res.send(createdUser);
+      const payload = { id: createdUser._id, name, email };
+      sendToken(payload, res);
     });
   });
 };
@@ -33,18 +48,7 @@ const login = async (req, res) => {
   bcrypt.compare(password, user.password).then(isMatched => {
     if (isMatched) {
       const payload = { id: user.id, name: user.name, email: user.email };
-
-      jwt.sign(
-        payload,
-        keys.jwtSecret,
-        { expiresIn: 3600 },
-        (err, token) => {
-          res.json({
-            success: true,
-            token: `Bearer ${token}`
-          });
-        }
-      );
+      sendToken(payload, res);
     } else {
       return res.status(400).json({ success: false, error: 'Password incorrect' });
     }

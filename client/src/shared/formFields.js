@@ -9,6 +9,12 @@ const urlRule = {
   message: 'Invalid URL',
 }
 
+const emailRule = {
+  //eslint-disable-next-line
+  pattern: new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/iu),
+  message: 'Invalid Email',
+}
+
 const hexValueRule = {
   //eslint-disable-next-line
   pattern: new RegExp(/^#(?:[0-9a-fA-F]{3}){1,2}$/gm),
@@ -77,5 +83,20 @@ export const findCertificateFields = [
     label: 'Certificate uuid',
     name: 'uuid',
     rules: [requiredRule]
+  }
+];
+
+export const userAuthFormFields = [
+  {
+    label: 'Email Address',
+    name: 'email',
+    rules: [requiredRule, emailRule],
+    type: 'text'
+  },
+  {
+    label: 'Password',
+    name: 'password',
+    rules: [requiredRule],
+    type: 'password'
   }
 ];
