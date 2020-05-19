@@ -6,11 +6,11 @@ import AuthModal from '../../components/auth-modal/AuthModal';
 import { connect } from 'react-redux';
 import stylesheet from './StarredCertificates.styles';
 import { bindActionCreators } from "redux";
-import { verifyMe, getStarredCertificates, removeStarredCertificate } from './StarredCertificates.service';
+import { verifyMe, getStarredCertificates, addStarredCertificate, removeStarredCertificate } from './StarredCertificates.service';
 import { setUser } from '../../components/auth-modal/AuthModal.actions';
 import showNotification from '../../shared/showNotification';
 
-const StarredCertificates = ({ history, setUser, user }) => {
+const StarredCertificates = ({ history, setUser, user, location }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -22,7 +22,7 @@ const StarredCertificates = ({ history, setUser, user }) => {
   }, []);
 
   useEffect(() => {
-    if(!loading && !user.id && !showAuthModal) {
+    if (!loading && !user.id && !showAuthModal) {
       setShowAuthModal(true)
     }
   }, [user]);
@@ -65,6 +65,10 @@ const StarredCertificates = ({ history, setUser, user }) => {
       const token = localStorage.getItem("certificate-verifier-token");
       let res = await verifyMe(token);
       setUser(res.data);
+      const cid = new URLSearchParams(location.search).get("cid");
+      if(cid) {
+        await addStarredCertificate(token, cid);
+      }
       fetchStarred();
     } else {
       history.goBack();

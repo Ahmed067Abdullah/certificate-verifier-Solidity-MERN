@@ -18,6 +18,15 @@ export const getStarredCertificates = token => {
   return axios.get('http://localhost:5000/api/user/favourites', config);
 }
 
+export const addStarredCertificate = (token, certificateId) => {
+  const config = {
+    headers: {
+      Authorization: token,
+    }
+  }
+  return axios.put('http://localhost:5000/api/user/add/to/favourites', { certificateId }, config);
+}
+
 export const removeStarredCertificate = (token, certificateId) => {
   const config = {
     headers: {

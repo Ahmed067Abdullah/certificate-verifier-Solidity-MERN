@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Result } from 'antd';
+import { Result, Button } from 'antd';
 import { getCertificate } from './ViewCertificate.service';
 import { getCompany } from '../award-certificate/AwardCertificate.service';
 import showNotification from '../../shared/showNotification';
 import Spinner from '../../components/spinner/Spinner';
 import Certificate from '../../components/certificate/Certificate';
 import stylesheet from './ViewCertificate.styles';
+import { verifyMe, addStarredCertificate } from '../starred-certificates/StarredCertificates.service';
 
 const ViewCertificate = ({ match, history }) => {
   const [certificateLoading, setCertificateLoading] = useState(true);
+  const [starLoading, setStarLoading] = useState(false);
   const [certificate, setCertificate] = useState({});
   const [company, setCompany] = useState({});
   const [certificateError, setCertificateError] = useState('');
@@ -19,6 +21,27 @@ const ViewCertificate = ({ match, history }) => {
   }, []);
 
   const { params: { uuid } } = match;
+
+  const addToStarredHandler = async () => {
+    setStarLoading(true);
+    const token = localStorage.getItem("certificate-verifier-token");
+    try {
+      let res = await verifyMe(token);
+      if (res.data.id) {
+        await addStarredCertificate(token, uuid);
+      } else {
+        console.log('object')
+        history.push(`/starred-certificates?cid=${uuid}`)
+      }
+    }
+    catch (e) {
+      console.log(e)
+      history.push(`/starred-certificates?cid=${uuid}`)
+    }
+    finally {
+      setStarLoading(false);
+    }
+  }
 
   const setupCertificate = async () => {
     try {
@@ -56,7 +79,9 @@ const ViewCertificate = ({ match, history }) => {
         />
       </div>
       : <div className='view-certificate-container'>
-        {/* <button onClick={exportPDF}>Export PDF</button> */}
+        <Button type="primary" onClick={addToStarredHandler} loading={starLoading}>
+          Add to Starred
+        </Button>
         <button onClick={() => history.push('/home')}>Go back to Application</button>
         <Certificate uuid={uuid} certificate={certificate} company={company} />
       </div>
