@@ -6,8 +6,9 @@ import AuthModal from '../../components/auth-modal/AuthModal';
 import { connect } from 'react-redux';
 import stylesheet from './StarredCertificates.styles';
 import { bindActionCreators } from "redux";
-import { verifyMe, getStarredCertificates, addStarredCertificate, removeStarredCertificate } from './StarredCertificates.service';
+import { getStarredCertificates, addStarredCertificate, removeStarredCertificate } from './StarredCertificates.service';
 import { setUser } from '../../components/auth-modal/AuthModal.actions';
+import { verifyMe } from '../../components/auth-modal/AuthModal.service';
 import showNotification from '../../shared/showNotification';
 
 const StarredCertificates = ({ history, setUser, user, location }) => {
@@ -62,12 +63,11 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
     }, 500);
     if (flag) {
       setLoading(true);
-      const token = localStorage.getItem("certificate-verifier-token");
-      let res = await verifyMe(token);
+      let res = await verifyMe();
       setUser(res.data);
       const cid = new URLSearchParams(location.search).get("cid");
-      if(cid) {
-        await addStarredCertificate(token, cid);
+      if (cid) {
+        await addStarredCertificate(cid);
       }
       fetchStarred();
     } else {
@@ -76,7 +76,6 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
   }
 
   const handleRemoveFromStarred = cid => {
-    const token = localStorage.getItem("certificate-verifier-token");
     const updatedCertificates = starred.map(s => {
       if (cid === s._id) {
         s.loading = true;
@@ -84,7 +83,7 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
       return s;
     });
     setStarred(updatedCertificates);
-    removeStarredCertificate(token, cid)
+    removeStarredCertificate(cid)
       .then(() => {
         setToRemove([...toRemove, cid]);
         showNotification('Success', 'Certificate removed from starred');

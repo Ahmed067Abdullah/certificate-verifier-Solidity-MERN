@@ -6,7 +6,7 @@ import getRoutes from './shared/routes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { setUser } from './components/auth-modal/AuthModal.actions';
-import { verifyMe } from './containers/starred-certificates/StarredCertificates.service';
+import { verifyMe } from './components/auth-modal/AuthModal.service';
 
 const App = ({ setUser }) => {
   const [metamastStatus, setMetamastStatus] = useState(0);
@@ -20,9 +20,8 @@ const App = ({ setUser }) => {
     if (!ethereum) {
       setMetamastStatus(1);
     } else {
-      const token = localStorage.getItem("certificate-verifier-token");
-      if (token) {
-        let res = await verifyMe(token);
+      let res = await verifyMe();
+      if (res) {
         setUser(res.data);
       }
       ethereum.enable()

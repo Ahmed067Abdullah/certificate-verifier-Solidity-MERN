@@ -6,7 +6,9 @@ import showNotification from '../../shared/showNotification';
 import Spinner from '../../components/spinner/Spinner';
 import Certificate from '../../components/certificate/Certificate';
 import stylesheet from './ViewCertificate.styles';
-import { verifyMe, addStarredCertificate } from '../starred-certificates/StarredCertificates.service';
+import { addStarredCertificate } from '../starred-certificates/StarredCertificates.service';
+import { verifyMe } from '../../components/auth-modal/AuthModal.service';
+
 
 const ViewCertificate = ({ match, history }) => {
   const [certificateLoading, setCertificateLoading] = useState(true);
@@ -24,13 +26,11 @@ const ViewCertificate = ({ match, history }) => {
 
   const addToStarredHandler = async () => {
     setStarLoading(true);
-    const token = localStorage.getItem("certificate-verifier-token");
     try {
-      let res = await verifyMe(token);
+      let res = await verifyMe();
       if (res.data.id) {
-        await addStarredCertificate(token, uuid);
+        await addStarredCertificate(uuid);
       } else {
-        console.log('object')
         history.push(`/starred-certificates?cid=${uuid}`)
       }
     }

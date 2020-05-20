@@ -1,7 +1,7 @@
 import contract from '../../shared/contract';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
-import axios from 'axios';
+import request from '../../shared/request';
 import showNotification from '../../shared/showNotification';
 
 export const getCompany = (companyAddress, ownAddress) => {
@@ -29,11 +29,11 @@ export const checkCompany = (setCompanyLoading, setComapnyNotRegistered, setComp
 }
 
 export const saveCertificate = payload => {
-  return axios.post('http://localhost:5000/api/certificates', payload);
+  return request('/certificates', 'post', false, payload);
 };
 
 export const updatedCertificateStatus = (_id, status) => {
-  return axios.put(`http://localhost:5000/api/certificates/${_id}`, { status });
+  return request(`/certificates/${_id}`, 'put', false, { status });
 };
 
 

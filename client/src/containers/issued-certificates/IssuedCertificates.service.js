@@ -1,6 +1,6 @@
-import axios from 'axios';
+import request from '../../shared/request';
 
 export const getIssuedCertificates = () => {
   const { ethereum } = window;
-  return axios.get(`http://localhost:5000/api/certificates?companyAddress=${ethereum.selectedAddress}`);
+  return request(`/certificates?companyAddress=${ethereum.selectedAddress}`, 'get');
 }

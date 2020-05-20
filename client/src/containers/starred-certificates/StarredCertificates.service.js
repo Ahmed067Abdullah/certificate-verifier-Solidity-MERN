@@ -1,37 +1,13 @@
-import axios from 'axios';
+import request from '../../shared/request';
 
-export const verifyMe = token => {
-  const config = {
-    headers: {
-      Authorization: token,
-    }
-  }
-  return axios.get('http://localhost:5000/api/user/me', config);
+export const getStarredCertificates = () => {
+  return request('/user/favourites', 'get', true);
 }
 
-export const getStarredCertificates = token => {
-  const config = {
-    headers: {
-      Authorization: token,
-    }
-  }
-  return axios.get('http://localhost:5000/api/user/favourites', config);
+export const addStarredCertificate = certificateId => {
+  return request('/user/add/to/favourites', 'put', true, { certificateId });
 }
 
-export const addStarredCertificate = (token, certificateId) => {
-  const config = {
-    headers: {
-      Authorization: token,
-    }
-  }
-  return axios.put('http://localhost:5000/api/user/add/to/favourites', { certificateId }, config);
-}
-
-export const removeStarredCertificate = (token, certificateId) => {
-  const config = {
-    headers: {
-      Authorization: token,
-    }
-  }
-  return axios.put('http://localhost:5000/api/user/remove/from/favourites', { certificateId }, config);
+export const removeStarredCertificate = certificateId => {
+  return request('/user/remove/from/favourites', 'put', true, { certificateId });
 }
