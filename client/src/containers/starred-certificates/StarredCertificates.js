@@ -36,9 +36,9 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
     }
   }, [toRemove]);
 
-  const fetchStarred = async () => {
+  const fetchStarred = async responseUser => {
     const token = localStorage.getItem("certificate-verifier-token");
-    if (token) {
+    if (token && (user.id || (responseUser && responseUser.id))) {
       try {
         const res = await getStarredCertificates(token);
         setStarred(res.data.favourites)
@@ -62,14 +62,22 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
       setShowAuthModal(false);
     }, 500);
     if (flag) {
-      setLoading(true);
-      let res = await verifyMe();
-      setUser(res.data);
-      const cid = new URLSearchParams(location.search).get("cid");
-      if (cid) {
-        await addStarredCertificate(cid);
+      let res;
+      try {
+        setLoading(true);
+        res = await verifyMe();
+        setUser(res.data);
+        const cid = new URLSearchParams(location.search).get("cid");
+        if (cid) {
+          await addStarredCertificate(cid);
+        }
+      } catch (e) {
+        if (e && e.response && e.response.data.error === 'Certificate is already starred') {
+          showNotification('Error', e, true);
+        }
+      } finally {
+        fetchStarred(res.data);
       }
-      fetchStarred();
     } else {
       history.goBack();
     }
@@ -91,7 +99,8 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
   }
 
   const showCertificate = uuid => {
-    window.open(`${window.location.origin}/view-certificate/${uuid}`)
+    history.push(`/view-certificate/${uuid}`);
+    // window.open(`${window.location.origin}/view-certificate/${uuid}`)
   }
 
   const classes = stylesheet();

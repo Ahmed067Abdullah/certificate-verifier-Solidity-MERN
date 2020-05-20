@@ -6,7 +6,7 @@ import stylesheet from './IssuedCertificates.styles';
 import { getIssuedCertificates } from './IssuedCertificates.service';
 import showNotification from '../../shared/showNotification';
 
-const IssuedCertificates = () => {
+const IssuedCertificates = ({ history }) => {
 
   const [loading, setLoading] = useState(true);
   const [certificates, setCertificates] = useState([]);
@@ -39,7 +39,8 @@ const IssuedCertificates = () => {
   }
 
   const showCertificate = uuid => {
-    window.open(`${window.location.origin}/view-certificate/${uuid}`)
+    history.push(`/view-certificate/${uuid}`);
+    // window.open(`${window.location.origin}/view-certificate/${uuid}`)
   }
 
   const classes = stylesheet();

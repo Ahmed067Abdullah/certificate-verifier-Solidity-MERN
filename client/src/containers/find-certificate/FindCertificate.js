@@ -8,7 +8,7 @@ import { getCertificate } from '../view-certificate/ViewCertificate.service';
 import showNotification from '../../shared/showNotification';
 // import { SketchPicker } from 'react-color';
 
-const QueryCertificate = () => {
+const QueryCertificate = ({ history }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formEl = useRef(null);
 
@@ -24,7 +24,8 @@ const QueryCertificate = () => {
             },
           ]);
         } else {
-          window.open(`${window.location.origin}/view-certificate/${values.uuid}`)
+          history.push(`/view-certificate/${values.uuid}`);
+          // window.open(`${window.location.origin}/view-certificate/${values.uuid}`)
         }
         console.log(res);
       })
