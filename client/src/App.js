@@ -20,20 +20,25 @@ const App = ({ setUser }) => {
     if (!ethereum) {
       setMetamastStatus(1);
     } else {
-      let res = await verifyMe();
-      if (res) {
-        setUser(res.data);
+      try {
+        let res = await verifyMe();
+        if (res) {
+          setUser(res.data);
+        }
+      } catch (e) {
+        localStorage.removeItem("certificate-verifier-token");
+      } finally {
+        ethereum.enable()
+          .then(() => {
+            setTimeout(() => {
+              setMetamastStatus(3);
+            }, 500);
+          })
+          .catch(err => {
+            setMetamastStatus(2);
+            console.log(err)
+          });
       }
-      ethereum.enable()
-        .then(() => {
-          setTimeout(() => {
-            setMetamastStatus(3);
-          }, 500);
-        })
-        .catch(err => {
-          setMetamastStatus(2);
-          console.log(err)
-        });
     }
   }
 

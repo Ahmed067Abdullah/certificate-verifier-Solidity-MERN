@@ -13,7 +13,6 @@ import showNotification from '../../shared/showNotification';
 
 const StarredCertificates = ({ history, setUser, user, location }) => {
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [starred, setStarred] = useState([]);
   const [toRemove, setToRemove] = useState([]);
@@ -41,8 +40,7 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
     if (token && (user.id || (responseUser && responseUser.id))) {
       try {
         const res = await getStarredCertificates(token);
-        setStarred(res.data.favourites)
-        setIsAuthenticated(true);
+        setStarred(res.data.favourites);
       }
       catch (e) {
         console.log(e)
