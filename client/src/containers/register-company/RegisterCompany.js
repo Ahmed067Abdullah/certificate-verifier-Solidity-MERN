@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button, Card } from 'antd';
 import Navbar from '../../components/nav-bar/NavBar';
+import Footer from '../../components/footer/Footer';
 import { registerCompanyFormFields as formFields } from '../../shared/formFields';
 import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './RegisterCompany.styles';
@@ -51,8 +52,9 @@ const RegisterCompany = () => {
   const companyAlreadyRegistered = !comapnyNotRegistered;
 
   return (
-    <div style={{ 'pointerEvents': isSubmitting ? 'none' : 'all' }}>
+    <div style={{ 'pointerEvents': isSubmitting ? 'none' : 'all' }} className="main-container">
       <Navbar />
+      <div className="navbar-placeholder" />
       <Card
         className={classes['register-company-card']}
         title="Register Company"
@@ -84,6 +86,7 @@ const RegisterCompany = () => {
           </Form.Item>
         </Form>
       </Card>
+      <Footer />
     </div>
   )
 }

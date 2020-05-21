@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { callLogout } from '../auth-modal/AuthModal.service';
+import stylesheet from './NavBar.styles';
 
 const NavBar = ({ user, callLogout }) => {
   const [current, setCurrent] = useState(window.location.pathname.slice(1));
+  
+  const classes = stylesheet();
+  
   return (
-    <div>
+    <div className={classes['navbar-container']}>
       <Menu onClick={e => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal">
         <Menu.Item key="home">
           <Link to="/home">

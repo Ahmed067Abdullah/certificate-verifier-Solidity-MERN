@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Card, Button, Result } from 'antd';
 import Navbar from '../../components/nav-bar/NavBar';
+import Footer from '../../components/footer/Footer';
 import stylesheet from './IssuedCertificates.styles';
 import { getIssuedCertificates } from './IssuedCertificates.service';
 import showNotification from '../../shared/showNotification';
@@ -62,8 +63,9 @@ const IssuedCertificates = ({ history }) => {
   }
 
   return (
-    <div>
+    <div className="main-container">
       <Navbar />
+      <div className="navbar-placeholder" />
       <div className={classes['certificates-container']}>
         {certificatesJSX
           ? <Row gutter={[16, 24]}>
@@ -76,8 +78,8 @@ const IssuedCertificates = ({ history }) => {
               subTitle={<p>Click <Link to="/award-certificate">here</Link> to issue your first certificate</p>}
             />
           </div>}
-
       </div>
+      <Footer />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Form, Input, Button, Card, DatePicker } from 'antd';
 import { Link } from "react-router-dom";
 import Navbar from '../../components/nav-bar/NavBar';
+import Footer from '../../components/footer/Footer';
 import { awardCertificateFormFields as formFields } from '../../shared/formFields';
 import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './AwardCertificate.styles';
@@ -50,8 +51,9 @@ const AwardCertificate = () => {
   const classes = stylesheet();
 
   return (
-    <div>
+    <div className="main-container">
       <Navbar />
+      <div className="navbar-placeholder" />
       <Card
         className={classes['register-company-card']}
         title="Award Certificate"
@@ -86,6 +88,7 @@ const AwardCertificate = () => {
           </Form.Item>
         </Form>
       </Card>
+      <Footer />
     </div>
   )
 }

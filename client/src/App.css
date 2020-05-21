@@ -2,3 +2,15 @@
 body {
   background-color: #fafafa;
 }
+
+.App {
+  position: relative;
+}
+
+.main-container {
+  padding-bottom: 100px;
+}
+
+.navbar-placeholder {
+  height: 48px;
+}

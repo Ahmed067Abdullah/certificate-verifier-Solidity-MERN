@@ -48,7 +48,7 @@ const Certificate = ({ uuid, certificate, company }) => {
 
   return (
     <div className={classes['certificate-container']}>
-      <a href={website} target="_blank" without rel="noopener noreferrer">
+      <a href={website} target="_blank" rel="noopener noreferrer">
         <div className={classes['styled-div']}>
           <img src={''} alt="Company logo" />
         </div>

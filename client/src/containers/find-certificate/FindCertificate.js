@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Form, Input, Button, Card } from 'antd';
 import Navbar from '../../components/nav-bar/NavBar';
+import Footer from '../../components/footer/Footer';
 import { findCertificateFields as formFields } from '../../shared/formFields';
 import { layout, tailLayout } from '../../shared/formLayout';
 import stylesheet from './FindCertificate.styles';
@@ -40,8 +41,9 @@ const QueryCertificate = ({ history }) => {
 
   const classes = stylesheet();
   return (
-    <div>
+    <div className="main-container">
       <Navbar />
+      <div className="navbar-placeholder" />
       <Card
         className={classes['card']}
         title="Find Certificate">
@@ -66,6 +68,7 @@ const QueryCertificate = ({ history }) => {
           </Form.Item>
         </Form>
       </Card>
+      <Footer />
     </div>
   )
 }

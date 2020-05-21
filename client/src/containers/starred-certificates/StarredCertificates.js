@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Button, Result, Tooltip } from 'antd';
 import { CloseCircleFilled, LoadingOutlined } from '@ant-design/icons';
 import Navbar from '../../components/nav-bar/NavBar';
+import Footer from '../../components/footer/Footer';
 import AuthModal from '../../components/auth-modal/AuthModal';
 import { connect } from 'react-redux';
 import stylesheet from './StarredCertificates.styles';
@@ -141,11 +142,13 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
   }
 
   return (
-    <div>
+    <div className="main-container">
       <Navbar />
+      <div className="navbar-placeholder" />
       <div className={classes['certificates-container']}>
         {certificatesJSX}
       </div>
+      <Footer />
     </div>
   );
 };
