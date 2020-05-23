@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_ENDPOINT = 'http://localhost:5000/api';
+const API_ENDPOINT = '/api';
 
 const fetchToken = () => {
   const token = localStorage.getItem("certificate-verifier-token");
