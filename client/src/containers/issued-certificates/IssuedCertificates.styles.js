@@ -5,7 +5,7 @@ const styles = {
     'maxWidth': '100vw',
     'overflowX': 'hidden',
     'padding': '16px 24px',
-    'width': '100vw'
+    'width': '100%'
   },
   'candidate-name': {
     'fontWeight': 500
@@ -13,7 +13,7 @@ const styles = {
   'empty-state-container': {
     'alignItems': 'center',
     'display': 'flex',
-    'height': 'calc(100vh - 120px)',
+    'height': 'calc(100vh - 180px)',
     'justifyContent': 'center'
   }
 };
