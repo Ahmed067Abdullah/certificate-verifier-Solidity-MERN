@@ -16,6 +16,7 @@ const styles = {
   },
   'footer-container': {
     'backgroundColor': '#FFF',
+    'borderTop': '1px solid #f0f0f0',
     'padding': '10px',
     'display': 'flex',
     'position': 'fixed',

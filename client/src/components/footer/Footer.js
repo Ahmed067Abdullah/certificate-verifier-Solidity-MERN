@@ -14,6 +14,7 @@ const Footer = () => {
           <a
             className={classes['code-icon']}
             target="_blank"
+            rel="noopener noreferrer"
             href="https://github.com/Ahmed067Abdullah/certificate-verifier-Solidity-MERN">
             &lt;/&gt;
         </a>
@@ -22,10 +23,20 @@ const Footer = () => {
           <a href="mailto:ahmed067abdullah@gmail.com"><MailFilled /></a>
         </Tooltip>
         <Tooltip placement="top" title="Github">
-          <a target="_blank" href="https://github.com/Ahmed067Abdullah"><GithubFilled /></a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/Ahmed067Abdullah">
+            <GithubFilled />
+          </a>
         </Tooltip>
         <Tooltip placement="top" title="LinkedIn">
-          <a target="_blank" href="https://pk.linkedin.com/in/ahmed-abdullah-74a414172"><LinkedinFilled /></a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://pk.linkedin.com/in/ahmed-abdullah-74a414172">
+            <LinkedinFilled />
+          </a>
         </Tooltip>
       </div>
     </div>
