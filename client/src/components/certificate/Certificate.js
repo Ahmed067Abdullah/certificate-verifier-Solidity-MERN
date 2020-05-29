@@ -34,15 +34,15 @@ const Certificate = ({ uuid, certificate, company }) => {
   const position = certificate[1];
   const startDate = certificate[2] * 1000;
   const endDate = certificate[3] * 1000;
-  const user = certificate[5];
-  const designation = certificate[6];
+  const awardedAt = certificate[5] * 1000;
+  const user = certificate[6];
+  const designation = certificate[7];
   const companyName = company[0];
   const logoURL = company[1];
   const website = company[2];
   const primaryColor = company[3];
   const secondaryColor = company[4];
   const difference = getDifference(startDate, endDate);
-  const awardedAt = 1587551502739;
 
   const classes = createUseStyles(stylesheet(primaryColor, secondaryColor))();
 
@@ -50,7 +50,7 @@ const Certificate = ({ uuid, certificate, company }) => {
     <div className={classes['certificate-container']}>
       <a href={website} target="_blank" rel="noopener noreferrer">
         <div className={classes['styled-div']}>
-          <img src={''} alt="Company logo" />
+          <img src={logoURL} alt="Company logo" />
         </div>
       </a>
       <div className={classes['main-content']}>

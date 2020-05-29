@@ -13,6 +13,7 @@ const App = ({ setUser }) => {
 
   useEffect(() => {
     setUpUserAndWallet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setUpUserAndWallet = async () => {

@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/Ahmed067Abdullah/certificate-verifier#readme",
   "dependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "moment-timezone": "^0.5.31"
   }
 }

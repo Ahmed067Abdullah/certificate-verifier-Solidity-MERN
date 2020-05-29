@@ -18,6 +18,7 @@ contract CertificateVerifier {
         address awarder;
         string awarderName;
         string awarderDesignation;
+        string awardedAt;
         bool isSet;
     }
     
@@ -39,18 +40,25 @@ contract CertificateVerifier {
         );
     }
     
-    function awardCertificate(string memory uuid, string memory name, string memory  position, string memory startDate, string memory  endDate, string memory  awarderName, string memory  awarderDesignation) public {
+    function awardCertificate(string memory uuid, string memory name, string memory  position, string memory startDate, string memory  endDate, string memory  awarderName, string memory  awarderDesignation, string memory  awardedAt) public {
         require(Companies[tx.origin].isSet, "Organization isn't registered");
         require(!Certificates[uuid].isSet, 'Certificate ID already used');
-        Certificates[uuid] = Certificate(name, position, startDate, endDate, tx.origin, awarderName, awarderDesignation,true);
+        Certificates[uuid] = Certificate(name, position, startDate, endDate, tx.origin, awarderName, awarderDesignation, awardedAt, true);
     }
     
-    function getCertificate(string memory uuid) public view returns (string memory, string memory, string memory, string memory, address, string memory, string memory) {
+    function getCertificate(string memory uuid) public view returns (string memory, string memory, string memory, string memory, address, string memory) {
         return (
             Certificates[uuid].candidateName,
             Certificates[uuid].position,
             Certificates[uuid].startDate,
             Certificates[uuid].endDate,
+            Certificates[uuid].awarder,
+            Certificates[uuid].awardedAt
+        );
+    }
+    
+    function getCertificateAwarderDetails(string memory uuid) public view returns (address, string memory, string memory) {
+        return (
             Certificates[uuid].awarder,
             Certificates[uuid].awarderName,
             Certificates[uuid].awarderDesignation

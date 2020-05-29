@@ -1,6 +1,6 @@
 import web3 from './web3';
 
-const address = '0x06e5bd5a3f39eda3a804f08e6eadce289c0083f7';
+const address = '0xf801fE839C04B45725Ad6de7fE69e7Bb7B11bAa5';
 
 const abi = [
 	{
@@ -39,6 +39,11 @@ const abi = [
 				"internalType": "string",
 				"name": "awarderDesignation",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "awardedAt",
+				"type": "string"
 			}
 		],
 		"name": "awardCertificate",
@@ -76,6 +81,30 @@ const abi = [
 				"name": "",
 				"type": "string"
 			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "uuid",
+				"type": "string"
+			}
+		],
+		"name": "getCertificateAwarderDetails",
+		"outputs": [
 			{
 				"internalType": "address",
 				"name": "",

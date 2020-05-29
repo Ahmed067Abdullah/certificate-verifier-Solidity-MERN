@@ -1,6 +1,7 @@
 import contract from '../../shared/contract';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
+import momentTz from 'moment-timezone';
 import request from '../../shared/request';
 import showNotification from '../../shared/showNotification';
 
@@ -44,6 +45,8 @@ export const awardCertificate = values => {
     const uuid = uuidv4();
     const startDate = moment(duration[0]).unix().toString();
     const endDate = moment(duration[1]).unix().toString();
+    const tz = momentTz.tz.guess();
+    const awardedAt = momentTz.utc(momentTz().tz(tz).format()).tz(tz).unix().toString();
 
     let certificate = null;
     try {
@@ -54,7 +57,8 @@ export const awardCertificate = values => {
         startDate,
         endDate,
         presenter,
-        presenterDesignation
+        presenterDesignation,
+        awardedAt
       )
         .send({ from: selectedAddress }, async (err, address) => {
           if (err) {

@@ -20,12 +20,14 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
 
   useEffect(() => {
     fetchStarred();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!loading && !user.id && !showAuthModal) {
       setShowAuthModal(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const StarredCertificates = ({ history, setUser, user, location }) => {
       const updatedStarred = starred.filter(s => s._id !== cid);
       setStarred(updatedStarred);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toRemove]);
 
   const fetchStarred = async responseUser => {
