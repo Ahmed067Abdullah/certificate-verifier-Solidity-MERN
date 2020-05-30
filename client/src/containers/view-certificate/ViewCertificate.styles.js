@@ -8,6 +8,9 @@ const styles = {
     'paddingLeft': '10px'
   },
   'btns-container': {
+    '& > button': {
+      'margin': '0 5px'
+    },
     'alignItems': 'center',
     'display': 'flex',
     'margin': '20px 0',

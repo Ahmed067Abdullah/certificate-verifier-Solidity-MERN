@@ -51,6 +51,26 @@ const ViewCertificate = ({ match, history }) => {
     }
   }
 
+  const copyUrlHandler = () => {
+    var textarea = document.createElement("textarea");
+    textarea.textContent = window.location.href;
+    textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand("copy");  // Security exception may be thrown by some browsers.
+      showNotification('Success', 'URL copied successfully');
+      return;
+    }
+    catch (ex) {
+      console.warn("Copy to clipboard failed.", ex);
+      return false;
+    }
+    finally {
+      document.body.removeChild(textarea);
+    }
+  }
+
   const setupCertificate = async () => {
     try {
       const certificateObj = await getCertificate(uuid);
@@ -100,7 +120,10 @@ const ViewCertificate = ({ match, history }) => {
           <div className={classes['btns-container']}>
             <Button type="primary" onClick={addToStarredHandler} loading={starLoading}>
               Add to Starred
-          </Button>
+            </Button>
+            <Button type="primary" onClick={copyUrlHandler}>
+              Copy URL
+            </Button>
           </div>
         </div>}
     <Footer />
