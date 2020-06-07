@@ -13,6 +13,11 @@ const NotFound = ({ status }) => {
     btn = <Button type="primary" onClick={() => window.location.reload()}>Reload</Button>;
     title = 'Access denied';
     errorStatus = 403;
+  } else if (status === 4) {
+    message = "Please select Ropsten Test Network in metamask extension";
+    btn = null;
+    title = 'Network issue';
+    errorStatus = 403;
   }
 
   const classes = stylesheet();

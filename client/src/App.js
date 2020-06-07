@@ -13,6 +13,16 @@ const App = ({ setUser }) => {
 
   useEffect(() => {
     setUpUserAndWallet();
+
+    if (window.ethereum) {
+      window.ethereum.on('networkChanged', networkId => {
+        if (networkId !== 3) {
+          setMetamastStatus(4);
+        } else {
+          enableEthereum();
+        }
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -29,18 +39,29 @@ const App = ({ setUser }) => {
       } catch (e) {
         localStorage.removeItem("certificate-verifier-token");
       } finally {
-        ethereum.enable()
-          .then(() => {
-            setTimeout(() => {
-              setMetamastStatus(3);
-            }, 500);
-          })
-          .catch(err => {
-            setMetamastStatus(2);
-            console.log(err)
-          });
+        setTimeout(() => {
+          if (ethereum.networkVersion !== "3") {
+            setMetamastStatus(4);
+          } else {
+            enableEthereum();
+          }
+        }, 50);
       }
     }
+  }
+
+  const enableEthereum = () => {
+    const { ethereum } = window;
+    ethereum.enable()
+      .then(() => {
+        setTimeout(() => {
+          setMetamastStatus(3);
+        }, 500);
+      })
+      .catch(err => {
+        setMetamastStatus(2);
+        console.log(err)
+      });
   }
 
   return (

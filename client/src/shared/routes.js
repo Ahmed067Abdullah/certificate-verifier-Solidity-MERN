@@ -11,7 +11,7 @@ import NotFound from '../containers/not-found/NotFound';
 
 const getRoutes = status => {
   let routes;
-  if (status === 1 || status === 2) {
+  if (status === 1 || status === 2 || status === 4) {
     routes = <>
       <Route path="/not-found" component={() => <NotFound status={status} />} />
       <Redirect to="/not-found" />
