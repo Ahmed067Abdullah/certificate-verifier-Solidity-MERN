@@ -12,6 +12,7 @@ To deal with the above mentioned issue, We can maintain a decentralized record o
 
 # To run locally:
 1. clone the repository.
+2. Add your ```mongoURI``` and ```jwtSecret``` in ```./server/config/keys.js```
 2. In the root directory, execute
    1. ```npm run install-all```.
    2. ```npm run dev```.
