@@ -15,3 +15,9 @@ To deal with the above mentioned issue, We can maintain a decentralized record o
 2. In the root directory, execute
    1. ```npm run install-all```.
    2. ```npm run dev```.
+   
+# Demo
+Click [here](http://certificate-verifier.herokuapp.com/home)
+
+# To run application without dependency of Metamask
+Next JS version can be found [here](https://github.com/Ahmed067Abdullah/certificate-verifier-NextJS)
